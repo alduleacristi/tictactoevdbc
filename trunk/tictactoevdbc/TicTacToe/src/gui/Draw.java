@@ -1,8 +1,11 @@
 package gui;
 
 import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import database.DataBase;
 
 public class Draw extends JFrame {
 
