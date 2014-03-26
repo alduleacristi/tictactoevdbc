@@ -1,8 +1,8 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 public class ModelContent extends Observable{
 	private List<List<Integer>> a;	
@@ -13,7 +13,11 @@ public class ModelContent extends Observable{
 	
 	
 	public ModelContent() {
+		a = new ArrayList<List<Integer>>();
 		gata = false;
+		jucator = 1;
+		scorjucator1 = 0;
+		scorjucator2 = 0;
 	}
 	
 	public List<List<Integer>> getA() {
