@@ -41,7 +41,7 @@ public class Controller {
 		int j = x / width;
 
 		JOptionPane.showMessageDialog(null, i+" "+j);
-		// m.modify(i, j);
+		m.modify(i, j);
 	}
 
 	public void newGame(int n, int m, int nrpozpunct) {
