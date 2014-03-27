@@ -13,6 +13,10 @@ public class MatrixCheck {
 		mc = new ModelContent();
 	}
 
+	public MatrixCheck(ModelContent mc) {
+		this.mc = mc;
+	}
+
 	public ModelContent getMc() {
 		return mc;
 	}
@@ -22,7 +26,35 @@ public class MatrixCheck {
 	}
 
 	public void modify(int i, int j) {
+		System.out.println("am intrat in modify");
+		mc.setPrimu(false);
 
+		if (mc.getJucator() == 0) {
+			System.out.println("jucator 1");
+			if (mc.getA().get(i).get(j) != 0) {
+				return;
+			}
+			mc.getA().get(i).set(j, 1);
+			mc.setJucator(1);
+			// VerifLinie(i,j);
+			// VerifCol(i,j);
+			// VerifDiag(i,j);
+			// VerifDiag2(i,j);
+		} else {
+			System.out.println("jucator 2");
+			if (mc.getA().get(i).get(j) != 0) {
+				return;
+			}
+			mc.getA().get(i).set(j, 2);
+			mc.setJucator(0);
+			// VerifLinie(i,j);
+			// VerifCol(i,j);
+			// VerifDiag(i,j);
+			// VerifDiag2(i,j);
+		}
+		// VerifGata();
+		// System.out.println("acu notificam");
+		// mc.notifyObservers();
 	}
 
 	public void initMatrix(int n, int m, int nrpozpunct) {
@@ -47,7 +79,7 @@ public class MatrixCheck {
 			mc.setJocnou(true);
 
 		mc.setPrimu(true);
-		// NotifyAll();
+		// mc.notifyObservers();
 	}
 
 	public void verifLine(int x, int y) {

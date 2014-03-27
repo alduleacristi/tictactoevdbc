@@ -3,8 +3,10 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -13,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import controller.MatrixCheck;
 
 public class DrawPanel extends JPanel implements Observer {
 
@@ -32,23 +33,32 @@ public class DrawPanel extends JPanel implements Observer {
 
 	public DrawPanel() {
 		super(new BorderLayout());
+
 		c = new Controller();
+
 		c.getM().initMatrix(5, 5, 4);
+
 		setFields();
 		setBottom();
+
 		c.getM().getMc().setNrpozpunct(line);
+
 		width = getWidth();
 		height = getHeight();
 	}
 
 	public DrawPanel(int n, int m, int line) {
 		super(new BorderLayout());
-		MatrixCheck matrix = new MatrixCheck();
-		c = new Controller(matrix);
+
+		c = new Controller();
+
 		c.getM().initMatrix(n, m, line);
+
 		setFields();
 		setBottom();
+
 		c.getM().getMc().setNrpozpunct(line);
+
 		width = getWidth();
 		height = getHeight();
 
@@ -56,6 +66,7 @@ public class DrawPanel extends JPanel implements Observer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				c.click(e.getX(), e.getY(), width, height);
+				// update(c.getM().getMc(), "click");
 			}
 
 			@Override
@@ -81,6 +92,8 @@ public class DrawPanel extends JPanel implements Observer {
 	}
 
 	private void setBottom() {
+		c.getM().getMc().addObserver(this);
+
 		String player = new String("Urmeaza jucatorul 1");
 		String scoreP1 = new String("Scor jucator 1: 0");
 		String scoreP2 = new String("Scor jucator 2: 0");
@@ -105,11 +118,12 @@ public class DrawPanel extends JPanel implements Observer {
 		width = getWidth();
 		height = getHeight();
 
-		drawLines(g, width, height, n, m);
+		drawLines(g);
+
+		drawXandO(g);
 	}
 
-	private void drawLines(Graphics g, int width, int height, int n, int m) {
-
+	private void drawLines(Graphics g) {
 		int w = width;
 		int h = height - 50;
 
@@ -128,10 +142,39 @@ public class DrawPanel extends JPanel implements Observer {
 			g.drawLine(2, y, width - 2, y);
 			y += dist;
 		}
+	}
 
+	private void drawXandO(Graphics g) {
+		int distx = (width - 2) / m;
+		int disty = (height - 50) / n;
+		Graphics2D g2 = (Graphics2D) g;
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++) {
+				if (c.getM().getMc().getA().get(i).get(j) == 2
+						|| c.getM().getMc().getA().get(i).get(j) == -2) {
+					int x = j * distx + distx / 4;
+					int xfinal = j * distx + distx / 4 * 3;
+					int y = i * disty + disty / 4;
+					int yfinal = i * disty + disty / 4 * 3;
+					int xr = (xfinal + x) / 2;
+					int yr = (yfinal + y) / 2;
+					g2.draw(new Ellipse2D.Double(xr, yr, (xfinal - x) / 2,
+							(yfinal - y) / 2));
+				}
+				if (c.getM().getMc().getA().get(i).get(j) == 1
+						|| c.getM().getMc().getA().get(i).get(j) == -1) {
+					int x = j * distx;
+					int xfinal = j * distx + distx / 4 * 3;
+					int y = i * disty + disty / 4;
+					int yfinal = i * disty + disty / 4 * 3;
+					g.drawLine(x, y, xfinal, yfinal);
+					g.drawLine(xfinal, y, x, yfinal);
+				}
+			}
 	}
 
 	private void updateBottom() {
+		// System.out.println("update bottom");
 		String player;
 		String scoreP1 = new String("Scor jucator 1: "
 				+ c.getM().getMc().getScorjucator1());
@@ -139,20 +182,21 @@ public class DrawPanel extends JPanel implements Observer {
 				+ c.getM().getMc().getScorjucator2());
 		if (c.getM().getMc().getJucator() == 1) {
 			player = new String("Urmeaza jucatorul 2");
-		} else
+		} else {
 			player = new String("Urmeaza jucatorul 1");
+		}
 		bottom.setText(player + "|" + scoreP1 + "|" + scoreP2);
 	}
 
 	@Override
 	public void update(Observable modelContent, Object description) {
-		System.out.println("redesenare update");
+		// System.out.println("redesenare update");
 		c.getM().setMc((ModelContent) modelContent);
 		if (!c.getM().getMc().isPrimu()) {
-			// redesenarea
+			repaint();
 		}
 		if (!c.getM().getMc().isJocnou()) {
-			// redesenarea
+			repaint();
 		}
 	}
 }
