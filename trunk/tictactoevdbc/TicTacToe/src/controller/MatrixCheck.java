@@ -55,7 +55,7 @@ public class MatrixCheck {
 			}
 			mc.setIJElement(i, j, 1);
 			mc.setJucator(1);
-			verifLine(i, j);
+			//verifLine(i, j);
 			verifCol(i, j);
 			verifDiag(i, j);
 			verifDiag2(i, j);
@@ -65,7 +65,7 @@ public class MatrixCheck {
 			}
 			mc.setIJElement(i, j, 2);
 			mc.setJucator(0);
-			verifLine(i, j);
+			//verifLine(i, j);
 			verifCol(i, j);
 			verifDiag(i, j);
 			verifDiag2(i, j);
