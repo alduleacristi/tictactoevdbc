@@ -1,4 +1,4 @@
-package gui;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,31 @@ public class ModelContent extends Observable {
 		jucator = 1;
 		scorjucator1 = 0;
 		scorjucator2 = 0;
+		pointsList = new ArrayList<Point>();
 	}
 
-	public List<List<Integer>> getA() {
-		return a;
+	public int getIJElement(int i, int j) {
+		return a.get(i).get(j);
 	}
 
-	public void setA(List<List<Integer>> a) {
-		this.a = a;
-		setChanged();
-		notifyObservers();
+	public void setIJElement(int i, int j, int val) {
+		a.get(i).set(j, val);
+	}
+
+	public int getLinii() {
+		return a.size();
+	}
+
+	public int getColoane() {
+		return a.get(0).size();
+	}
+
+	public void addPeLinii(List<Integer> aux) {
+		a.add(aux);
+	}
+
+	public void addPeColoane(int i, int val) {
+		a.get(i).add(val);
 	}
 
 	public int getJucator() {
@@ -35,8 +50,6 @@ public class ModelContent extends Observable {
 
 	public void setJucator(int jucator) {
 		this.jucator = jucator;
-		setChanged();
-		notifyObservers();
 	}
 
 	public int getScorjucator1() {
@@ -45,8 +58,6 @@ public class ModelContent extends Observable {
 
 	public void setScorjucator1(int scorjucator1) {
 		this.scorjucator1 = scorjucator1;
-		setChanged();
-		notifyObservers();
 	}
 
 	public int getScorjucator2() {
@@ -55,8 +66,6 @@ public class ModelContent extends Observable {
 
 	public void setScorjucator2(int scorjucator2) {
 		this.scorjucator2 = scorjucator2;
-		setChanged();
-		notifyObservers();
 	}
 
 	public int getNrpozpunct() {
@@ -65,8 +74,6 @@ public class ModelContent extends Observable {
 
 	public void setNrpozpunct(int nrpozpunct) {
 		this.nrpozpunct = nrpozpunct;
-		setChanged();
-		notifyObservers();
 	}
 
 	public boolean isPrimu() {
@@ -75,8 +82,6 @@ public class ModelContent extends Observable {
 
 	public void setPrimu(boolean primu) {
 		this.primu = primu;
-		setChanged();
-		notifyObservers();
 	}
 
 	public boolean isJocnou() {
@@ -85,8 +90,6 @@ public class ModelContent extends Observable {
 
 	public void setJocnou(boolean jocnou) {
 		this.jocnou = jocnou;
-		setChanged();
-		notifyObservers();
 	}
 
 	public List<Point> getPointsList() {
@@ -95,8 +98,10 @@ public class ModelContent extends Observable {
 
 	public void setPointsList(List<Point> pointsList) {
 		this.pointsList = pointsList;
-		setChanged();
-		notifyObservers();
+	}
+
+	public void addPoint(Point point) {
+		pointsList.add(point);
 	}
 
 	public boolean isGata() {
@@ -105,6 +110,10 @@ public class ModelContent extends Observable {
 
 	public void setGata(boolean gata) {
 		this.gata = gata;
+	}
+
+	public void notifyObs() {
+		//System.out.println("notify obs");
 		setChanged();
 		notifyObservers();
 	}

@@ -1,9 +1,5 @@
 package controller;
 
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
 public class Controller {
 
 	MatrixCheck m;
@@ -25,9 +21,8 @@ public class Controller {
 	}
 
 	public void click(int x, int y, int width, int height) {
-		List<Integer> list = m.getMc().getA().get(0);
-		int n = m.getMc().getA().size();
-		int mm = list.size();
+		int n = m.getLinii();
+		int mm = m.getColoane();
 
 		height -= 50;
 		if (y > height - 10 || x > width - 10) {
@@ -40,7 +35,6 @@ public class Controller {
 		int i = y / height;
 		int j = x / width;
 
-		JOptionPane.showMessageDialog(null, i+" "+j);
 		m.modify(i, j);
 	}
 
