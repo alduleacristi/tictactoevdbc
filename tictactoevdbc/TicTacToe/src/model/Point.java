@@ -1,4 +1,4 @@
-package gui;
+package model;
 
 public class Point {
 	private int lin, col, tippunct;

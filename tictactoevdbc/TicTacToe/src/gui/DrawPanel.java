@@ -4,17 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.ModelContent;
 import controller.Controller;
+import controller.Mouse;
 
 public class DrawPanel extends JPanel implements Observer {
 
@@ -31,6 +30,8 @@ public class DrawPanel extends JPanel implements Observer {
 	private int width;
 	private int height;
 
+	private Mouse mouseListener;
+
 	public DrawPanel() {
 		super(new BorderLayout());
 
@@ -41,10 +42,13 @@ public class DrawPanel extends JPanel implements Observer {
 		setFields();
 		setBottom();
 
-		c.getM().getMc().setNrpozpunct(line);
+		c.getM().setNrpozpunct(line);
 
 		width = getWidth();
 		height = getHeight();
+
+		mouseListener = new Mouse(c, width, height);
+		addMouseListener(mouseListener);
 	}
 
 	public DrawPanel(int n, int m, int line) {
@@ -57,43 +61,17 @@ public class DrawPanel extends JPanel implements Observer {
 		setFields();
 		setBottom();
 
-		c.getM().getMc().setNrpozpunct(line);
+		c.getM().setNrpozpunct(line);
 
 		width = getWidth();
 		height = getHeight();
 
-		addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				c.click(e.getX(), e.getY(), width, height);
-				// update(c.getM().getMc(), "click");
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// System.out.println("mouse entered");
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// System.out.println("mouse exited");
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// System.out.println("mouse presses");
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// System.out.println("mouse released");
-			}
-		});
+		mouseListener = new Mouse(c, width, height);
+		addMouseListener(mouseListener);
 	}
 
 	private void setBottom() {
 		c.getM().getMc().addObserver(this);
-
 		String player = new String("Urmeaza jucatorul 1");
 		String scoreP1 = new String("Scor jucator 1: 0");
 		String scoreP2 = new String("Scor jucator 2: 0");
@@ -102,10 +80,8 @@ public class DrawPanel extends JPanel implements Observer {
 	}
 
 	private void setFields() {
-		List<Integer> list = c.getM().getMc().getA().get(0);
-		line = c.getM().getMc().getNrpozpunct();
-		n = c.getM().getMc().getA().size();
-		m = list.size();
+		n = c.getM().getLinii();
+		m = c.getM().getColoane();
 	}
 
 	@Override
@@ -113,14 +89,20 @@ public class DrawPanel extends JPanel implements Observer {
 		super.paintComponent(g);
 		g.setColor(Color.black);
 
+		mouseListener.setC(c);
+
 		updateBottom();
 
 		width = getWidth();
 		height = getHeight();
+		mouseListener.setWidth(width);
+		mouseListener.setHeight(height);
 
 		drawLines(g);
 
 		drawXandO(g);
+
+		drawLinesTrough(g);
 	}
 
 	private void drawLines(Graphics g) {
@@ -150,8 +132,8 @@ public class DrawPanel extends JPanel implements Observer {
 		Graphics2D g2 = (Graphics2D) g;
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < m; j++) {
-				if (c.getM().getMc().getA().get(i).get(j) == 2
-						|| c.getM().getMc().getA().get(i).get(j) == -2) {
+				if (c.getM().getIJElement(i, j) == 2
+						|| c.getM().getIJElement(i, j) == -2) {
 					int x = j * distx + distx / 4;
 					int xfinal = j * distx + distx / 4 * 3;
 					int y = i * disty + disty / 4;
@@ -161,8 +143,8 @@ public class DrawPanel extends JPanel implements Observer {
 					g2.draw(new Ellipse2D.Double(xr, yr, (xfinal - x) / 2,
 							(yfinal - y) / 2));
 				}
-				if (c.getM().getMc().getA().get(i).get(j) == 1
-						|| c.getM().getMc().getA().get(i).get(j) == -1) {
+				if (c.getM().getIJElement(i, j) == 1
+						|| c.getM().getIJElement(i, j) == -1) {
 					int x = j * distx;
 					int xfinal = j * distx + distx / 4 * 3;
 					int y = i * disty + disty / 4;
@@ -173,8 +155,35 @@ public class DrawPanel extends JPanel implements Observer {
 			}
 	}
 
+	private void drawLinesTrough(Graphics g) {
+		int distx = (width - 2) / m;
+		int disty = (height - 50) / n;
+		int size = c.getM().getMc().getPointsList().size();
+		for (int i = 0; i < size; i++) {
+			int tipPct = c.getM().getMc().getPointsList().get(i).getTippunct();
+			int lin = c.getM().getMc().getPointsList().get(i).getLin();
+			int col = c.getM().getMc().getPointsList().get(i).getCol();
+			int nrPozPct = c.getM().getMc().getNrpozpunct();
+			int y = lin * disty + disty / 2;
+			int x = col * distx + distx / 2;
+			if (tipPct == 0) {
+				g.drawLine(x, y, x + (nrPozPct - 1) * distx, y);
+			}
+			if (tipPct == 1) {
+				g.drawLine(x, y, x, y + (nrPozPct - 1) * disty);
+			}
+			if (tipPct == 2) {
+				g.drawLine(x, y, x + (nrPozPct - 1) * distx, y + (nrPozPct - 1)
+						* disty);
+			}
+			if (tipPct == 3) {
+				g.drawLine(x, y, x - (nrPozPct - 1) * distx, y + (nrPozPct - 1)
+						* disty);
+			}
+		}
+	}
+
 	private void updateBottom() {
-		// System.out.println("update bottom");
 		String player;
 		String scoreP1 = new String("Scor jucator 1: "
 				+ c.getM().getMc().getScorjucator1());
@@ -190,13 +199,7 @@ public class DrawPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable modelContent, Object description) {
-		// System.out.println("redesenare update");
 		c.getM().setMc((ModelContent) modelContent);
-		if (!c.getM().getMc().isPrimu()) {
-			repaint();
-		}
-		if (!c.getM().getMc().isJocnou()) {
-			repaint();
-		}
+		repaint();
 	}
 }
