@@ -1,8 +1,14 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 /**
  * The persistent class for the game database table.
@@ -69,30 +75,34 @@ public class Game implements Serializable {
 
 	/**
 	 * Returns the matrix in byte format.
+	 * 
 	 * @return state
 	 */
 	public byte[] getState() {
 		return this.state;
 	}
-	
+
 	/**
 	 * Sets the matrix already mapped in byte[].
+	 * 
 	 * @param state
 	 */
 	public void setState(byte[] state) {
 		this.state = state;
 	}
-	
+
 	/**
 	 * Returns the status, which could be "In progress" or "Finished".
+	 * 
 	 * @return
 	 */
 	public String getStatus() {
 		return this.status;
 	}
-	
+
 	/**
 	 * Sets the status, which could be "In progress" or "Finished".
+	 * 
 	 * @param status
 	 */
 	public void setStatus(String status) {
