@@ -1,16 +1,20 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,16 +25,16 @@ public class User implements Serializable {
 
 	private String username;
 
-	//bi-directional many-to-one association to Game
-	@OneToMany(mappedBy="user1", fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Game
+	@OneToMany(mappedBy = "user1", fetch = FetchType.EAGER)
 	private List<Game> games1;
 
-	//bi-directional many-to-one association to Game
-	@OneToMany(mappedBy="user2", fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Game
+	@OneToMany(mappedBy = "user2", fetch = FetchType.EAGER)
 	private List<Game> games2;
 
-	//bi-directional many-to-one association to Game
-	@OneToMany(mappedBy="user3", fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Game
+	@OneToMany(mappedBy = "user3", fetch = FetchType.EAGER)
 	private List<Game> games3;
 
 	public User() {
