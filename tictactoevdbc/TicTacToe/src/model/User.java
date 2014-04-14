@@ -1,22 +1,30 @@
 package model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
+import java.util.List;
 
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+@NamedQueries({
+		@NamedQuery(name = User.allUsers, query = "SELECT u FROM User u"),
+		@NamedQuery(name = User.userByUsername, query = "SELECT u FROM User u where u.username=:user") })
 public class User implements Serializable {
+	@Override
+	public String toString() {
+		return "User [idUser=" + idUser + ", password=" + password
+				+ ", username=" + username + "]";
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	public final static String allUsers = "get all users";
+	public final static String userByUsername="getUserByUsername";
 
 	@Id
 	private int idUser;

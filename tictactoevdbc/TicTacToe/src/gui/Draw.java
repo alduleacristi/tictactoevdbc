@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import client.ClientComunication;
 
 public class Draw extends JFrame {
 
@@ -21,7 +22,9 @@ public class Draw extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		InitialDialog dialog = new InitialDialog();
-		dialog.show();
+		//InitialDialog dialog = new InitialDialog();
+		//dialog.show();
+		ClientComunication cc = new ClientComunication();
+		LoginForm lf = new LoginForm(cc);		
 	}
 }
