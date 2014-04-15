@@ -35,6 +35,9 @@ public class InitialDialog {
 		nTxt = new JTextField(10);
 		mTxt = new JTextField(10);
 		lineTxt = new JTextField(10);
+		nTxt.setText("5");
+		mTxt.setText("5");
+		lineTxt.setText("4");
 	}
 
 	public void show() {
