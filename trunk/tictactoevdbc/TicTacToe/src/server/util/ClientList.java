@@ -51,4 +51,14 @@ public class ClientList {
 	public void removeClient(String username){
 		clients.remove(username);
 	}
+	
+	public List<ObjectOutputStream> getClientsStream(){
+		List<ObjectOutputStream> ooss = new ArrayList<>();
+		Set<String> clientsName = clients.keySet();
+		
+		for(String s:clientsName)
+			ooss.add(clients.get(s));
+		
+		return ooss;
+	}
 }
