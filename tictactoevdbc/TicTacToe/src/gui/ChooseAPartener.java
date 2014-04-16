@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.ClientComunication;
-import client.WaitForRequest;
+import client.WaitForResponse;
 
 public class ChooseAPartener {
 	private JFrame frame;
@@ -23,7 +23,7 @@ public class ChooseAPartener {
 	private JComboBox<Integer> rows,columns;
 	private JButton refreshButton, play;
 	private ClientComunication clientComunication;
-	private WaitForRequest waitForRequest;
+	private WaitForResponse waitForRequest;
 	private String name;
 	private JLabel rowsLabel,columnsLabel;
 
@@ -84,7 +84,7 @@ public class ChooseAPartener {
 		frame.add(panel);
 		this.clientComunication = clientComunication;
 
-		waitForRequest = new WaitForRequest(ois, this, name, clientComunication);
+		waitForRequest = new WaitForResponse(ois, this, name, clientComunication);
 		waitForRequest.start();
 	}
 

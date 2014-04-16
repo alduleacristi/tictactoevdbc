@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.List;
 
 import server.util.ClientList;
 import util.EResponseType;
@@ -26,8 +27,13 @@ public class ActionServer extends Thread {
 		response.setClients(ClientList.getInstance().getClientList());
 
 		try {
-			oos.writeObject(response);
-			oos.flush();
+			List<ObjectOutputStream> streams = ClientList.getInstance()
+					.getClientsStream();
+
+			for (ObjectOutputStream stream : streams) {
+				stream.writeObject(response);
+				stream.flush();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,32 +78,40 @@ public class ActionServer extends Thread {
 						System.out.println(request.getResponseToPlayRequest()
 								.getPlayer1());
 						System.out.println(request.getResponseToPlayRequest()
-												.getPlayer2());
+								.getPlayer2());
 						partenerStream = ClientList.getInstance()
 								.getClientSocket(
 										request.getResponseToPlayRequest()
 												.getPlayer1());
-						ClientList.getInstance().removeClient(request.getResponseToPlayRequest().getPlayer1());
-						ClientList.getInstance().removeClient(request.getResponseToPlayRequest().getPlayer2());
+						ClientList.getInstance()
+								.removeClient(
+										request.getResponseToPlayRequest()
+												.getPlayer1());
+						ClientList.getInstance()
+								.removeClient(
+										request.getResponseToPlayRequest()
+												.getPlayer2());
 						startGame.setStart(true);
-						startGame.setM(request.getResponseToPlayRequest().getM());
-						startGame.setN(request.getResponseToPlayRequest().getN());
+						startGame.setM(request.getResponseToPlayRequest()
+								.getM());
+						startGame.setN(request.getResponseToPlayRequest()
+								.getN());
 						response.setResponseType(EResponseType.START_GAME);
 						response.setStartGame(startGame);
-						
+
 						partenerStream.writeObject(response);
 						partenerStream.flush();
-						
+
 						oos.writeObject(response);
 						oos.flush();
-					}else{
+					} else {
 						startGame.setStart(false);
 						response.setResponseType(EResponseType.START_GAME);
 						response.setStartGame(startGame);
 						oos.writeObject(response);
 						oos.flush();
 					}
-					
+
 					break;
 				default:
 					break;

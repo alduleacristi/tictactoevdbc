@@ -12,13 +12,13 @@ import util.ResponseToPlayRequest;
 import gui.ChooseAPartener;
 import gui.Draw;
 
-public class WaitForRequest extends Thread {
+public class WaitForResponse extends Thread {
 	private ChooseAPartener clientServer;
 	private ObjectInputStream ois;
 	private String name;
 	private ClientComunication clientComunication;
 
-	public WaitForRequest(ObjectInputStream ois, ChooseAPartener clientServer,String name,ClientComunication clientComunication) {
+	public WaitForResponse(ObjectInputStream ois, ChooseAPartener clientServer,String name,ClientComunication clientComunication) {
 		this.name = name;
 		this.ois = ois;
 		this.clientServer = clientServer;
