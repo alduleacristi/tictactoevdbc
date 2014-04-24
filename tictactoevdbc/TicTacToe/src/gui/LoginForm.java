@@ -86,9 +86,9 @@ public class LoginForm {
 				if (user.equals("") == false && pass.equals(password.getText())) {
 					frame.dispose();
 					
-					InitialDialog dialog = new InitialDialog();
-					dialog.show();
-					//clientComunication.connectToServer(user);
+					//InitialDialog dialog = new InitialDialog();
+					//dialog.show();
+					clientComunication.connectToServer(user);
 				} else
 					JOptionPane.showMessageDialog(frame,
 							"Invalid username or password!", "Erorr",
