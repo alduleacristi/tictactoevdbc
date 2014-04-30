@@ -33,7 +33,7 @@ public class Controller {
 		this.m = m;
 	}
 
-	public void click(int x, int y, int width, int height) {
+	public void click(int x, int y, int width, int height) throws ClicException {
 		int n = m.getLinii();
 		int mm = m.getColoane();
 
@@ -49,7 +49,6 @@ public class Controller {
 		int j = x / width;
 		
 		verificareGataSiModificare(i, j);
-	}
 
 		// trimit i si j
 
@@ -92,3 +91,4 @@ public class Controller {
 			}
 		}
 }
+	}

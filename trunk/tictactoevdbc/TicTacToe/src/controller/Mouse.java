@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import exceptii.ClicException;
+
 public class Mouse implements MouseListener {
 
 	private Controller c;
@@ -43,7 +45,12 @@ public class Mouse implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		c.click(e.getX(), e.getY(), width, height);
+		try {
+			c.click(e.getX(), e.getY(), width, height);
+		} catch (ClicException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 
 import javax.swing.JOptionPane;
 
+import exceptii.ClicException;
 import util.ERequestType;
 import util.Request;
 import util.Response;
@@ -97,8 +98,13 @@ public class WaitForResponse extends Thread {
 				case DRAW:
 					System.out.println(response.getI() + " " + response.getJ());
 					draw.getPanel().getC().setSend(false);
-					draw.getPanel().getC().getM()
-							.modify(response.getI(), response.getJ());
+					try {
+						draw.getPanel().getC().getM()
+								.modify(response.getI(), response.getJ());
+					} catch (ClicException e) {
+						JOptionPane.showMessageDialog(null,
+								e.getMessage());
+					}
 					break;
 				default:
 					break;
