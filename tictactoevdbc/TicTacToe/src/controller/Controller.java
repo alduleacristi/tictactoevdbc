@@ -2,7 +2,7 @@ package controller;
 
 import javax.swing.JOptionPane;
 
-import exception.ClickException;
+import exceptii.ClicException;
 
 public class Controller {
 
@@ -52,7 +52,7 @@ public class Controller {
 				m.verifOver();
 				if (m.getMc().isGata())
 					afisareMesajGata();
-			} catch (ClickException e) {
+			} catch (ClicException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
