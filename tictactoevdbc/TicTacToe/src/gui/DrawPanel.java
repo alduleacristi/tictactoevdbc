@@ -11,6 +11,7 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.ClientComunication;
 import model.ModelContent;
 import controller.Controller;
 import controller.Mouse;
@@ -20,7 +21,6 @@ public class DrawPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 
 	private Controller c;
-
 	private int n;
 	private int m;
 	private int line;
@@ -32,10 +32,15 @@ public class DrawPanel extends JPanel implements Observer {
 
 	private Mouse mouseListener;
 
-	public DrawPanel() {
-		super(new BorderLayout());
+	public Controller getC() {
+		return c;
+	}
 
-		c = new Controller();
+	public DrawPanel(ClientComunication cm) {
+		
+		
+		super(new BorderLayout());
+		c = new Controller(cm);
 
 		c.getM().initMatrix(5, 5, 4);
 
@@ -49,12 +54,13 @@ public class DrawPanel extends JPanel implements Observer {
 
 		mouseListener = new Mouse(c, width, height);
 		addMouseListener(mouseListener);
+
 	}
 
-	public DrawPanel(int n, int m, int line) {
+	public DrawPanel(int n, int m, int line, ClientComunication cm) {
 		super(new BorderLayout());
-
-		c = new Controller();
+		System.out.println("draw panel ");
+		c = new Controller(cm);
 
 		c.getM().initMatrix(n, m, line);
 

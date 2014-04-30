@@ -24,9 +24,10 @@ public class ClientComunication {
 	private OutputStream out;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
-	private final String host = "localhost";
+	private final String host = "localhost"; 
 	private final int port = 5555;
 	private String name;
+	
 
 	public ClientComunication() {
 
@@ -101,13 +102,16 @@ public class ClientComunication {
 		} 
 	}
 	
-	public void contactUserToPlay(String player2,String player1, Integer n,Integer m){
+	public void sendUpdatedMatrix(List<List<Integer>> list){
+		
+	}
+	public void contactUserToPlay(String player2,String player1, Integer n,Integer m, Integer line){
 		ContactUser contactUser = new ContactUser();
 		contactUser.setPlayer2(player2);
 		contactUser.setPlayer1(player1);
 		contactUser.setM(m);
 		contactUser.setN(n);
-		
+		contactUser.setLine(line);
 		Request request = new Request();
 		request.setRequestType(ERequestType.CONTACT_USER_TO_PLAY);
 		request.setContactUser(contactUser);
@@ -125,5 +129,22 @@ public class ClientComunication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendMove(int i , int j){
+		Request req = new Request();
+		req.setI(i);
+		req.setJ(j);
+		req.setRequestType(ERequestType.SEND_MOVE);
+		ContactUser us = new ContactUser();
+		us.setPlayer1(name);
+		req.setContactUser(us);
+		try {
+			this.sendRequest(req);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

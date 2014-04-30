@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import client.ClientComunication;
+
 public class InitialDialog {
 
 	private JFrame frame;
@@ -24,7 +26,9 @@ public class InitialDialog {
 	private JTextField lineTxt;
 	private JButton button;
 
-	public InitialDialog() {
+	private ClientComunication cm;
+	private String name1, name2;
+	public InitialDialog(ClientComunication clientComunication, String name1, String name2) {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -38,6 +42,9 @@ public class InitialDialog {
 		nTxt.setText("5");
 		mTxt.setText("5");
 		lineTxt.setText("4");
+		this.cm = clientComunication;
+		this.name1=name1;
+		this.name2=name2;
 	}
 
 	public void show() {
@@ -103,8 +110,9 @@ public class InitialDialog {
 					JOptionPane.showMessageDialog(null, "Porneste jocul");
 				}
 				frame.setVisible(false);
-				Draw dp = new Draw(n, m, line);
-				dp.show();
+				cm.contactUserToPlay(name1,name2,n,m, line);
+			//	Draw dp = new Draw(n, m, line, cm);
+			//	dp.show();
 			}
 		});
 	}

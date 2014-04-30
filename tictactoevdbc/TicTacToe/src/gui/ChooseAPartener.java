@@ -16,16 +16,17 @@ import javax.swing.JPanel;
 import client.ClientComunication;
 import client.WaitForResponse;
 
+
 public class ChooseAPartener {
 	private JFrame frame;
 	private JPanel panel,dimmensionPanel;
 	private JComboBox<String> clientsCombo;
-	private JComboBox<Integer> rows,columns;
+//	private JComboBox<Integer> rows,columns;
 	private JButton refreshButton, play;
 	private ClientComunication clientComunication;
 	private WaitForResponse waitForRequest;
 	private String name;
-	private JLabel rowsLabel,columnsLabel;
+//	private JLabel rowsLabel,columnsLabel;
 
 	public ChooseAPartener(List<String> clients,
 			ClientComunication clientComunication, ObjectInputStream ois,
@@ -60,25 +61,25 @@ public class ChooseAPartener {
 		else
 			play.setEnabled(true);
 		
-		rows = new JComboBox<>();
-		columns = new JComboBox<>();
-		
-		for(int i=3;i<=50;i++){
-			rows.addItem(i);
-			columns.addItem(i);
-		}
+//		rows = new JComboBox<>();
+//		columns = new JComboBox<>();
+//		
+//		for(int i=3;i<=50;i++){
+//			rows.addItem(i);
+//			columns.addItem(i);
+	//	}
 
 		panel.add(clientsCombo);
 		panel.add(refreshButton);
 		panel.add(play);
 		
-		rowsLabel = new JLabel("Choose the numbers of rows: ");
-		columnsLabel = new JLabel("Choose the number of columns: ");
+	//	rowsLabel = new JLabel("Choose the numbers of rows: ");
+	//	columnsLabel = new JLabel("Choose the number of columns: ");
 		
-		dimmensionPanel.add(rowsLabel,constraints2);
-		dimmensionPanel.add(rows,constraints2);
-		dimmensionPanel.add(columnsLabel,constraints3);
-		dimmensionPanel.add(columns,constraints3);
+	//	dimmensionPanel.add(rowsLabel,constraints2);
+	//	dimmensionPanel.add(rows,constraints2);
+	//	dimmensionPanel.add(columnsLabel,constraints3);
+	//	dimmensionPanel.add(columns,constraints3);
 
 		panel.add(dimmensionPanel,constraints);
 		frame.add(panel);
@@ -100,8 +101,11 @@ public class ChooseAPartener {
 
 	private void play() {
 		play.setEnabled(false);
-		clientComunication.contactUserToPlay((String) clientsCombo
-				.getSelectedItem(),name,(Integer) rows.getSelectedItem(),(Integer) columns.getSelectedItem());
+//		clientComunication.contactUserToPlay((String) clientsCombo
+//				.getSelectedItem(),name,(Integer) rows.getSelectedItem(),(Integer) columns.getSelectedItem());
+		
+		InitialDialog dialog = new InitialDialog(clientComunication,(String) clientsCombo.getSelectedItem(),name);
+		dialog.show();
 	}
 
 	public void refreshComboClients(List<String> clients) {
