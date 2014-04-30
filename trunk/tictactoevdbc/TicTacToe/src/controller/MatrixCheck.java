@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import exceptii.ClicException;
 import model.ModelContent;
 import model.Point;
@@ -10,7 +9,6 @@ import model.Point;
 //clasa Model
 public class MatrixCheck {
 	private ModelContent mc;
-
 	public MatrixCheck() {
 		mc = new ModelContent();
 	}
@@ -71,6 +69,8 @@ public class MatrixCheck {
 		}
 		verifOver();
 		mc.notifyObs();
+		
+		
 	}
 
 	public void initMatrix(int n, int m, int nrpozpunct) {

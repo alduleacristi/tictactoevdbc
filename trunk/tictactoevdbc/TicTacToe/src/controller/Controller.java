@@ -4,15 +4,24 @@ import javax.swing.JOptionPane;
 
 import exceptii.ClicException;
 
+import client.ClientComunication;
+
 public class Controller {
 
 	MatrixCheck m;
+	ClientComunication cm;
+	boolean send;
 
-	public Controller(MatrixCheck m) {
-		this.m = m;
+	public boolean isSend() {
+		return send;
 	}
 
-	public Controller() {
+	public void setSend(boolean send) {
+		this.send = send;
+	}
+
+	public Controller(ClientComunication cm) {
+		this.cm = cm;
 		m = new MatrixCheck();
 	}
 
@@ -42,20 +51,16 @@ public class Controller {
 		verificareGataSiModificare(i, j);
 	}
 
-	private void verificareGataSiModificare(int i, int j) {
-		m.verifOver();
-		if (m.getMc().isGata()) {
-			afisareMesajGata();
-		} else {
-			try {
-				m.modify(i, j);
-				m.verifOver();
-				if (m.getMc().isGata())
-					afisareMesajGata();
-			} catch (ClicException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
-		}
+		// trimit i si j
+
+		// m.modify(i, j);
+		if (send == false) {
+			send = true;
+			cm.sendMove(i, j);
+			m.modify(i, j);
+		} else
+			System.out.println("ai dat click o data");
+
 	}
 
 	private void afisareMesajGata() {
@@ -72,4 +77,18 @@ public class Controller {
 	public void newGame(int n, int m, int nrpozpunct) {
 		this.m.initMatrix(n, m, nrpozpunct);
 	}
+	private void verificareGataSiModificare(int i, int j) {
+		m.verifOver();
+		if (m.getMc().isGata()) {
+			afisareMesajGata();
+		} else {
+			try {
+				m.modify(i, j);
+				m.verifOver();
+				if (m.getMc().isGata())
+					afisareMesajGata();
+			} catch (ClicException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
 }

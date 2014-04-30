@@ -6,7 +6,7 @@ public class StartGame implements Serializable{
 	private static final long serialVersionUID = 6385804034433829019L;
 	
 	private boolean start;
-	private Integer n,m;
+	private Integer n,m, line;
 	public boolean isStart() {
 		return start;
 	}
@@ -28,5 +28,11 @@ public class StartGame implements Serializable{
 	@Override
 	public String toString() {
 		return "StartGame [start=" + start + ", n=" + n + ", m=" + m + "]";
+	}
+	public Integer getLine() {
+		return line;
+	}
+	public void setLine(Integer line) {
+		this.line = line;
 	}
 }

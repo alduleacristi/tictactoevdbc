@@ -8,7 +8,7 @@ public class ResponseToPlayRequest implements Serializable {
 	
 	private boolean accept;
 	private String player1,player2;
-	private Integer n,m;
+	private Integer n,m, line;
 	
 	public boolean isAccept() {
 		return accept;
@@ -40,4 +40,18 @@ public class ResponseToPlayRequest implements Serializable {
 	public void setM(Integer m) {
 		this.m = m;
 	}
+	@Override
+	public String toString() {
+		return "ResponseToPlayRequest [accept=" + accept + ", player1="
+				+ player1 + ", player2=" + player2 + ", n=" + n + ", m=" + m
+				+ "]";
+	}
+	public Integer getLine() {
+		return line;
+	}
+	public void setLine(Integer line) {
+		this.line = line;
+	}
+	
+	
 }

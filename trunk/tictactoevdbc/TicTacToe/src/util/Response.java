@@ -10,6 +10,24 @@ public class Response implements Serializable {
 	private List<String> clients;
 	private ContactUser contactUser;
 	private StartGame startGame;
+	private Integer i, j;
+
+	
+	public Integer getI() {
+		return i;
+	}
+
+	public void setI(Integer i) {
+		this.i = i;
+	}
+
+	public Integer getJ() {
+		return j;
+	}
+
+	public void setJ(Integer j) {
+		this.j = j;
+	}
 
 	public EResponseType getResponseType() {
 		return responseType;
@@ -49,6 +67,5 @@ public class Response implements Serializable {
 				+ clients + ", contactUser=" + contactUser + ", startGame="
 				+ startGame + "]";
 	}
-	
-	
+
 }

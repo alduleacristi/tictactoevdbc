@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 
 public class ModelContent extends Observable {
+	
 	private List<List<Integer>> a;
 	private int jucator, scorjucator1, scorjucator2, nrpozpunct;
 	private boolean primu, jocnou;
@@ -18,6 +19,14 @@ public class ModelContent extends Observable {
 		scorjucator1 = 0;
 		scorjucator2 = 0;
 		pointsList = new ArrayList<Point>();
+	}
+
+	public List<List<Integer>> getA() {
+		return a;
+	}
+
+	public void setA(List<List<Integer>> a) {
+		this.a = a;
 	}
 
 	public int getIJElement(int i, int j) {

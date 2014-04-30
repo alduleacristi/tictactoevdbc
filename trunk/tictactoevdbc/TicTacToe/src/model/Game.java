@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,6 +29,17 @@ public class Game implements Serializable {
 
 	@Lob
 	private byte[] state;
+
+	public Game(Timestamp beginDate, Timestamp endDate, byte[] state,
+			String status, User user1, User user2, User user3) {
+		this.beginDate = beginDate;
+		this.endDate = endDate;
+		this.state = state;
+		this.status = status;
+		this.user1 = user1;
+		this.user2 = user2;
+		this.user3 = user3;
+	}
 
 	private String status;
 
@@ -157,4 +169,13 @@ public class Game implements Serializable {
 		this.user3 = user3;
 	}
 
+	@Override
+	public String toString() {
+		return "Game [idGame=" + idGame + ", beginDate=" + beginDate
+				+ ", endDate=" + endDate + ", state=" + Arrays.toString(state)
+				+ ", status=" + status + ", user1=" + user1 + ", user2="
+				+ user2 + ", user3=" + user3 + "]";
+	}
+
+	
 }

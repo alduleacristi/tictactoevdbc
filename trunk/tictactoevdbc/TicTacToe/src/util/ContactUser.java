@@ -8,7 +8,7 @@ public class ContactUser implements Serializable {
 	
 	private String player2,player1;
 	private Integer n,m;
-
+    private Integer line;
 	public Integer getN() {
 		return n;
 	}
@@ -39,6 +39,20 @@ public class ContactUser implements Serializable {
 
 	public void setPlayer1(String player1) {
 		this.player1 = player1;
+	}
+
+	@Override
+	public String toString() {
+		return "ContactUser [player2=" + player2 + ", player1=" + player1
+				+ ", n=" + n + ", m=" + m + "]";
+	}
+
+	public Integer getLine() {
+		return line;
+	}
+
+	public void setLine(Integer line) {
+		this.line = line;
 	}
 	
 	
