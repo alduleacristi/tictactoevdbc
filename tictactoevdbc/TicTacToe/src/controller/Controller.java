@@ -1,5 +1,9 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
+import exception.ClickException;
+
 public class Controller {
 
 	MatrixCheck m;
@@ -34,8 +38,35 @@ public class Controller {
 
 		int i = y / height;
 		int j = x / width;
+		
+		verificareGataSiModificare(i, j);
+	}
 
-		m.modify(i, j);
+	private void verificareGataSiModificare(int i, int j) {
+		m.verifOver();
+		if (m.getMc().isGata()) {
+			afisareMesajGata();
+		} else {
+			try {
+				m.modify(i, j);
+				m.verifOver();
+				if (m.getMc().isGata())
+					afisareMesajGata();
+			} catch (ClickException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
+	}
+
+	private void afisareMesajGata() {
+		String rez = null;
+		if (m.getMc().getScorjucator1() > m.getMc().getScorjucator2())
+			rez = "Jucatorul 1 a castigat";
+		else if (m.getMc().getScorjucator1() > m.getMc().getScorjucator2())
+			rez = "Jucatorul 2 a castigat";
+		else
+			rez = "E egalitate";
+		JOptionPane.showMessageDialog(null, "GAME OVER!\n" + rez);
 	}
 
 	public void newGame(int n, int m, int nrpozpunct) {

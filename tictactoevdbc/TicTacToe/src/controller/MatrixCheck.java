@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ClickException;
 import model.ModelContent;
 import model.Point;
 
@@ -46,26 +47,24 @@ public class MatrixCheck {
 		mc.setIJElement(i, j, val);
 	}
 
-	public void modify(int i, int j) {
+	public void modify(int i, int j) throws ClickException {
 		mc.setPrimu(false);
 
+		if (mc.getIJElement(i, j) != 0) {
+			throw new ClickException("Ati dat click pe o casuta deja marcata");
+		}
+
 		if (mc.getJucator() == 0) {
-			if (mc.getIJElement(i, j) != 0) {
-				return;
-			}
 			mc.setIJElement(i, j, 1);
 			mc.setJucator(1);
-			//verifLine(i, j);
+			// verifLine(i, j);
 			verifCol(i, j);
 			verifDiag(i, j);
 			verifDiag2(i, j);
 		} else {
-			if (mc.getIJElement(i, j) != 0) {
-				return;
-			}
 			mc.setIJElement(i, j, 2);
 			mc.setJucator(0);
-			//verifLine(i, j);
+			// verifLine(i, j);
 			verifCol(i, j);
 			verifDiag(i, j);
 			verifDiag2(i, j);
@@ -99,10 +98,15 @@ public class MatrixCheck {
 	}
 
 	public void verifLine(int x, int y) {
-		int element = mc.getIJElement(y, x);
+		System.out.println("verif linie");
+		// System.out.println(x+" "+y);
+		int element = mc.getIJElement(x, y);
+		System.out.println(element);
+		System.out.println(x + " " + y);
 		int nr = mc.getNrpozpunct();
 		int m = mc.getColoane();
-		int copyx = x;
+
+		int copyx = y;
 
 		while (x > 0 && nr > 0) {
 			x--;
@@ -111,8 +115,8 @@ public class MatrixCheck {
 
 		nr = mc.getNrpozpunct() - nr + mc.getNrpozpunct();
 
-		for (; x <= copyx; x++) {
-			int i = x;
+		for (; y <= copyx; y++) {
+			int i = y;
 			if (i + mc.getNrpozpunct() <= m) {
 				boolean ok = true;
 				while (i < x + mc.getNrpozpunct() && i < m) {
@@ -126,6 +130,7 @@ public class MatrixCheck {
 					aux.setCol(x);
 					aux.setTippunct(0);
 					mc.getPointsList().add(aux);
+					System.out.println("adauga");
 					if (element == 1) {
 						mc.setScorjucator1(mc.getScorjucator1() + 1);
 						for (int j = x; j < x + mc.getNrpozpunct(); j++)
@@ -139,7 +144,6 @@ public class MatrixCheck {
 				}
 			}
 		}
-
 	}
 
 	public void verifCol(int x, int y) {
@@ -175,6 +179,7 @@ public class MatrixCheck {
 						mc.setScorjucator1(mc.getScorjucator1() + 1);
 						for (int j = x; j < x + mc.getNrpozpunct(); j++)
 							mc.setIJElement(j, y, -1);
+
 					} else {
 						mc.setScorjucator2(mc.getScorjucator2() + 1);
 						for (int j = x; j < x + mc.getNrpozpunct(); j++)
@@ -250,12 +255,11 @@ public class MatrixCheck {
 	}
 
 	public void verifOver() {
+		mc.setGata(false);
 		int nr = 0;
 		for (int i = 0; i < mc.getLinii(); i++)
 			for (int j = 0; j < mc.getColoane(); j++)
 				if (mc.getIJElement(i, j) != 0)
-					mc.setGata(false);
-				else
 					nr++;
 		if (nr == mc.getLinii() * mc.getColoane())
 			mc.setGata(true);
