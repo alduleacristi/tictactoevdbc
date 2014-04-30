@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import controller.MatrixCheck;
-import exception.ClickException;
+import exceptii.ClicException;
 
 public class MatrixCheckTest {
 
@@ -169,8 +169,8 @@ public class MatrixCheckTest {
 		assertTrue(b);
 	}
 
-	@Test(expected = ClickException.class)
-	public void testModifyThrowsException() throws ClickException {
+	@Test(expected = ClicException.class)
+	public void testModifyThrowsException() throws ClicException {
 		System.out.println("Testare modificare care arunca exception");
 		mc.setIJElement(0, 0, 1);
 		matrix.modify(0, 0);
@@ -181,7 +181,7 @@ public class MatrixCheckTest {
 		System.out.println("Testare moficare normala valoare matrice");
 		try {
 			matrix.modify(0, 0);
-		} catch (ClickException e) {
+		} catch (ClicException e) {
 			System.out.println(e);
 		}
 		assertEquals(1, matrix.getIJElement(0, 0));
@@ -192,7 +192,7 @@ public class MatrixCheckTest {
 		System.out.println("Testare modificare normala valoare jucator");
 		try {
 			matrix.modify(0, 0);
-		} catch (ClickException e) {
+		} catch (ClicException e) {
 			System.out.println(e);
 		}
 		assertEquals(1, matrix.getMc().getJucator());
@@ -209,7 +209,7 @@ public class MatrixCheckTest {
 		
 		try {
 			matrix.modify(x, x);
-		} catch (ClickException e) {
+		} catch (ClicException e) {
 			System.out.println(e);
 		}
 		
