@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ClickException;
+import exceptii.ClicException;
 import model.ModelContent;
 import model.Point;
 
@@ -47,11 +47,11 @@ public class MatrixCheck {
 		mc.setIJElement(i, j, val);
 	}
 
-	public void modify(int i, int j) throws ClickException {
+	public void modify(int i, int j) throws ClicException {
 		mc.setPrimu(false);
 
 		if (mc.getIJElement(i, j) != 0) {
-			throw new ClickException("Ati dat click pe o casuta deja marcata");
+			throw new ClicException("Ati dat click pe o casuta deja marcata");
 		}
 
 		if (mc.getJucator() == 0) {
