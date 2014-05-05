@@ -95,8 +95,15 @@ public class WaitForResponse extends Thread {
 					
 					System.out.println(response.getI() + " " + response.getJ());
 					draw.getPanel().getC().setSend(false);
-					draw.getPanel().getC().getM()
-							.modify(response.getI(), response.getJ());
+					try {
+						draw.getPanel().getC().getM()
+								.modify(response.getI(), response.getJ());
+					} catch (ClicException e) {
+						System.out.println(e);
+					}
+					break;
+				case WIN:
+					draw.getPanel().getC().afisareMesajGata();
 					break;
 				default:
 					break;

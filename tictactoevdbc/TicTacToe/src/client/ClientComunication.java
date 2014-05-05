@@ -147,4 +147,15 @@ public class ClientComunication {
 		}
 		
 	}
+	
+	public void finishGame(){
+		Request req = new Request();
+		req.setRequestType(ERequestType.WIN);
+		
+		try {
+			this.sendRequest(req);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
