@@ -48,7 +48,7 @@ public class Controller {
 		int i = y / height;
 		int j = x / width;
 		
-		verificareGataSiModificare(i, j);
+	
 
 		// trimit i si j
 
@@ -59,7 +59,8 @@ public class Controller {
 			m.modify(i, j);
 		} else
 			System.out.println("ai dat click o data");
-
+		
+		verificareGataSiModificare(i, j);
 	}
 
 	private void afisareMesajGata() {
@@ -81,14 +82,14 @@ public class Controller {
 		if (m.getMc().isGata()) {
 			afisareMesajGata();
 		} else {
-			try {
+//			try {
 				m.modify(i, j);
 				m.verifOver();
 				if (m.getMc().isGata())
 					afisareMesajGata();
-			} catch (ClicException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+//			} catch (ClicException e) {
+//				JOptionPane.showMessageDialog(null, e.getMessage());
+//			}
 		}
 }
 	}

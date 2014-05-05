@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import javax.swing.JOptionPane;
-
-import exceptii.ClicException;
 import util.ERequestType;
 import util.Request;
 import util.Response;
@@ -83,8 +81,6 @@ public class WaitForResponse extends Thread {
 					if (response.getStartGame().isStart()) {
 
 						if (draw == null) {
-							JOptionPane.showMessageDialog(null,
-									"You will be player 1 ");
 							draw = new Draw(response.getStartGame().getN(),
 									response.getStartGame().getM(), response
 											.getStartGame().getLine(),
@@ -96,15 +92,11 @@ public class WaitForResponse extends Thread {
 
 					break;
 				case DRAW:
+					
 					System.out.println(response.getI() + " " + response.getJ());
 					draw.getPanel().getC().setSend(false);
-					try {
-						draw.getPanel().getC().getM()
-								.modify(response.getI(), response.getJ());
-					} catch (ClicException e) {
-						JOptionPane.showMessageDialog(null,
-								e.getMessage());
-					}
+					draw.getPanel().getC().getM()
+							.modify(response.getI(), response.getJ());
 					break;
 				default:
 					break;
