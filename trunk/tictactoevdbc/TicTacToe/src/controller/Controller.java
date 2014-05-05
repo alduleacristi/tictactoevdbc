@@ -47,27 +47,23 @@ public class Controller {
 
 		int i = y / height;
 		int j = x / width;
-		
-	
 
 		// trimit i si j
 
 		// m.modify(i, j);
 		if (send == false) {
-			send = true;
-			cm.sendMove(i, j);
-			m.modify(i, j);
+			verificareGataSiModificare(i, j);
 		} else
-			System.out.println("ai dat click o data");
+			JOptionPane.showMessageDialog(null, "Urmeaza celalalt jucator.");
 		
 		verificareGataSiModificare(i, j);
 	}
 
-	private void afisareMesajGata() {
+	public void afisareMesajGata() {
 		String rez = null;
 		if (m.getMc().getScorjucator1() > m.getMc().getScorjucator2())
 			rez = "Jucatorul 1 a castigat";
-		else if (m.getMc().getScorjucator1() > m.getMc().getScorjucator2())
+		else if (m.getMc().getScorjucator1() < m.getMc().getScorjucator2())
 			rez = "Jucatorul 2 a castigat";
 		else
 			rez = "E egalitate";
@@ -77,6 +73,7 @@ public class Controller {
 	public void newGame(int n, int m, int nrpozpunct) {
 		this.m.initMatrix(n, m, nrpozpunct);
 	}
+
 	private void verificareGataSiModificare(int i, int j) {
 		m.verifOver();
 		if (m.getMc().isGata()) {
@@ -85,11 +82,19 @@ public class Controller {
 //			try {
 				m.modify(i, j);
 				m.verifOver();
-				if (m.getMc().isGata())
+				if (m.getMc().isGata()){
 					afisareMesajGata();
-//			} catch (ClicException e) {
-//				JOptionPane.showMessageDialog(null, e.getMessage());
-//			}
+					send = true;
+					cm.sendMove(i, j);
+					cm.finishGame();
+				}
+				else {
+					send = true;
+					cm.sendMove(i, j);
+				}
+			} catch (ClicException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
 		}
-}
 	}
+}

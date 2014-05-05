@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.User;
 import server.util.ClientList;
-import service.GameService;
+//import service.GameService;
 import service.UserService;
 import util.EResponseType;
 import util.Request;
@@ -145,6 +145,12 @@ public class ActionServer extends Thread {
 //					stteamn.flush();oos.flush();
 					
 					//if(part1== null) System.out.println("e nul"); else System.out.println("nu e nul");
+					part1.writeObject(resp);
+					part1.flush();
+					break;
+				case WIN:
+					resp = new Response();
+					resp.setResponseType(EResponseType.WIN);
 					part1.writeObject(resp);
 					part1.flush();
 					break;
