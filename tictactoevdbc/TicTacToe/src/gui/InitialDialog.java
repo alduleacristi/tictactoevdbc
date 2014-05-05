@@ -107,7 +107,7 @@ public class InitialDialog {
 					m = 5;
 					line = 4;
 				} else {
-					JOptionPane.showMessageDialog(null, "Porneste jocul");
+					JOptionPane.showMessageDialog(null, "You will be player 1");
 				}
 				frame.setVisible(false);
 				cm.contactUserToPlay(name1,name2,n,m, line);

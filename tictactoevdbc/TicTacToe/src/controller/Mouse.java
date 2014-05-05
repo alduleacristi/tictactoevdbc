@@ -48,8 +48,7 @@ public class Mouse implements MouseListener {
 		try {
 			c.click(e.getX(), e.getY(), width, height);
 		} catch (ClicException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println(e1);
 		}
 	}
 
