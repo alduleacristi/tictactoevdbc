@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import controller.MatrixCheck;
+import exceptii.ClicException;
 
 public class MatrixCheckTest {
 
@@ -168,32 +169,32 @@ public class MatrixCheckTest {
 		assertTrue(b);
 	}
 
-//	@Test(expected = ClicException.class)
-//	public void testModifyThrowsException() throws ClicException {
-//		System.out.println("Testare modificare care arunca exception");
-//		mc.setIJElement(0, 0, 1);
-//		matrix.modify(0, 0);
-//	}
+	@Test(expected = ClicException.class)
+	public void testModifyThrowsException() throws ClicException {
+		System.out.println("Testare modificare care arunca exception");
+		mc.setIJElement(0, 0, 1);
+		matrix.modify(0, 0);
+	}
 
 	@Test
 	public void testModifyMatrix() {
 		System.out.println("Testare moficare normala valoare matrice");
-//		try {
+		try {
 			matrix.modify(0, 0);
-//		} catch (ClicException e) {
-//			System.out.println(e);
-//		}
+		} catch (ClicException e) {
+			System.out.println(e);
+		}
 		assertEquals(1, matrix.getIJElement(0, 0));
 	}
 
 	@Test
 	public void testModifyPlayer() {
 		System.out.println("Testare modificare normala valoare jucator");
-//		try {
+		try {
 			matrix.modify(0, 0);
-//		} catch (ClicException e) {
-//			System.out.println(e);
-//		}
+		} catch (ClicException e) {
+			System.out.println(e);
+		}
 		assertEquals(1, matrix.getMc().getJucator());
 	}
 	
@@ -206,11 +207,11 @@ public class MatrixCheckTest {
 			matrix.getMc().setIJElement(i, i, 1);
 		}
 		
-//		try {
+		try {
 			matrix.modify(x, x);
-//		} catch (ClicException e) {
-//			System.out.println(e);
-//		}
+		} catch (ClicException e) {
+			System.out.println(e);
+		}
 		
 		assertEquals(1, matrix.getMc().getScorjucator1());
 	}
