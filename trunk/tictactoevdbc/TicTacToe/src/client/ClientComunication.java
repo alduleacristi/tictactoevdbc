@@ -24,10 +24,9 @@ public class ClientComunication {
 	private OutputStream out;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
-	private final String host = "localhost"; 
+	private final String host = "localhost";
 	private final int port = 5555;
 	private String name;
-	
 
 	public ClientComunication() {
 
@@ -47,24 +46,25 @@ public class ClientComunication {
 		}
 
 	}
-	
-	private void sendRequest(Request request) throws IOException{
-			oos.writeObject(request);
-			oos.flush();
+
+	private void sendRequest(Request request) throws IOException {
+		oos.writeObject(request);
+		oos.flush();
 	}
 
 	private void showClientsList() {
 		try {
 			Response response = (Response) ois.readObject();
-			
+
 			List<String> clients = response.getClients();
-			for(int i=0;i<clients.size();i++)
-				if(clients.get(i).equals(name)){
+			for (int i = 0; i < clients.size(); i++)
+				if (clients.get(i).equals(name)) {
 					clients.remove(i);
 					i--;
 				}
-			
-			ChooseAPartener clientsServer = new ChooseAPartener(clients,this,ois,name);
+
+			ChooseAPartener clientsServer = new ChooseAPartener(clients, this,
+					ois, name);
 			clientsServer.showForm();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -81,31 +81,33 @@ public class ClientComunication {
 		Request request = new Request();
 		request.setRequestType(ERequestType.THIS_IS_MY_NAME);
 		request.setSendName(sendName);
-		
+
 		try {
 			this.sendRequest(request);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		showClientsList();
 	}
-	
-	public void refreshClientList(){
+
+	public void refreshClientList() {
 		Request request = new Request();
 		request.setRequestType(ERequestType.GIVE_CLIENT_LIST);
-		
+
 		try {
 			this.sendRequest(request);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	public void sendUpdatedMatrix(List<List<Integer>> list){
-		
+
+	public void sendUpdatedMatrix(List<List<Integer>> list) {
+
 	}
-	public void contactUserToPlay(String player2,String player1, Integer n,Integer m, Integer line){
+
+	public void contactUserToPlay(String player2, String player1, Integer n,
+			Integer m, Integer line) {
 		ContactUser contactUser = new ContactUser();
 		contactUser.setPlayer2(player2);
 		contactUser.setPlayer1(player1);
@@ -115,23 +117,23 @@ public class ClientComunication {
 		Request request = new Request();
 		request.setRequestType(ERequestType.CONTACT_USER_TO_PLAY);
 		request.setContactUser(contactUser);
-		
+
 		try {
 			this.sendRequest(request);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void acceptResponse(Request request){
+
+	public void acceptResponse(Request request) {
 		try {
 			this.sendRequest(request);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void sendMove(int i , int j){
+
+	public void sendMove(int i, int j) {
 		Request req = new Request();
 		req.setI(i);
 		req.setJ(j);
@@ -145,13 +147,27 @@ public class ClientComunication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void finishGame(){
+
+	public void finishGame() {
 		Request req = new Request();
 		req.setRequestType(ERequestType.WIN);
-		
+
+		try {
+			this.sendRequest(req);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void logout(String name) {
+		Request req = new Request();
+		SendName sendName = new SendName();
+		sendName.setName(name);
+		req.setRequestType(ERequestType.LOGOUT);
+		req.setSendName(sendName);
+
 		try {
 			this.sendRequest(req);
 		} catch (IOException e) {

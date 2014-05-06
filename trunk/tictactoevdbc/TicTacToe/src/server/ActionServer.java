@@ -7,11 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
-
-import model.User;
 import server.util.ClientList;
-//import service.GameService;
-import service.UserService;
 import util.EResponseType;
 import util.Request;
 import util.Response;
@@ -154,6 +150,10 @@ public class ActionServer extends Thread {
 					part1.writeObject(resp);
 					part1.flush();
 					break;
+				case LOGOUT:
+					String name = request.getSendName().getName();
+					ClientList.getInstance().removeClient(name);
+					System.out.println("sa sters clientul: "+name);
 				default:
 					break;
 				}
