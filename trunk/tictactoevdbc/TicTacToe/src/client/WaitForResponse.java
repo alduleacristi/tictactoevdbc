@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import javax.swing.JOptionPane;
+
+import exceptii.ClicException;
 import util.ERequestType;
 import util.Request;
 import util.Response;

@@ -79,7 +79,7 @@ public class Controller {
 		if (m.getMc().isGata()) {
 			afisareMesajGata();
 		} else {
-//			try {
+			try {
 				m.modify(i, j);
 				m.verifOver();
 				if (m.getMc().isGata()){
