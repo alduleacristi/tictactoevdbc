@@ -7,7 +7,7 @@ public enum ERequestType implements Serializable{
 	GIVE_CLIENT_LIST("give_client_list"),
 	CONTACT_USER_TO_PLAY("contact_user_to_play"),
 	RESPONSE_TO_PLAY_REQUEST("response_to_play_request"),
-    SEND_MOVE("sebdmove"),WIN("win");
+    SEND_MOVE("sebdmove"),WIN("win"),LOGOUT("logout");
 	private final String name;
 
 	private ERequestType(final String query) {

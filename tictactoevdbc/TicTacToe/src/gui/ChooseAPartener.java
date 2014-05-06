@@ -4,29 +4,30 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.ObjectInputStream;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.ClientComunication;
 import client.WaitForResponse;
 
-
 public class ChooseAPartener {
 	private JFrame frame;
-	private JPanel panel,dimmensionPanel;
+	private JPanel panel, dimmensionPanel;
 	private JComboBox<String> clientsCombo;
-//	private JComboBox<Integer> rows,columns;
+	// private JComboBox<Integer> rows,columns;
 	private JButton refreshButton, play;
 	private ClientComunication clientComunication;
 	private WaitForResponse waitForRequest;
 	private String name;
-//	private JLabel rowsLabel,columnsLabel;
+
+	// private JLabel rowsLabel,columnsLabel;
 
 	public ChooseAPartener(List<String> clients,
 			ClientComunication clientComunication, ObjectInputStream ois,
@@ -39,7 +40,7 @@ public class ChooseAPartener {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 310;
-		
+
 		dimmensionPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints2 = new GridBagConstraints();
 		constraints2.gridy = 320;
@@ -60,33 +61,36 @@ public class ChooseAPartener {
 			play.setEnabled(false);
 		else
 			play.setEnabled(true);
-		
-//		rows = new JComboBox<>();
-//		columns = new JComboBox<>();
-//		
-//		for(int i=3;i<=50;i++){
-//			rows.addItem(i);
-//			columns.addItem(i);
-	//	}
+
+		// rows = new JComboBox<>();
+		// columns = new JComboBox<>();
+		//
+		// for(int i=3;i<=50;i++){
+		// rows.addItem(i);
+		// columns.addItem(i);
+		// }
 
 		panel.add(clientsCombo);
 		panel.add(refreshButton);
 		panel.add(play);
-		
-	//	rowsLabel = new JLabel("Choose the numbers of rows: ");
-	//	columnsLabel = new JLabel("Choose the number of columns: ");
-		
-	//	dimmensionPanel.add(rowsLabel,constraints2);
-	//	dimmensionPanel.add(rows,constraints2);
-	//	dimmensionPanel.add(columnsLabel,constraints3);
-	//	dimmensionPanel.add(columns,constraints3);
 
-		panel.add(dimmensionPanel,constraints);
+		// rowsLabel = new JLabel("Choose the numbers of rows: ");
+		// columnsLabel = new JLabel("Choose the number of columns: ");
+
+		// dimmensionPanel.add(rowsLabel,constraints2);
+		// dimmensionPanel.add(rows,constraints2);
+		// dimmensionPanel.add(columnsLabel,constraints3);
+		// dimmensionPanel.add(columns,constraints3);
+
+		panel.add(dimmensionPanel, constraints);
 		frame.add(panel);
 		this.clientComunication = clientComunication;
 
-		waitForRequest = new WaitForResponse(ois, this, name, clientComunication);
+		waitForRequest = new WaitForResponse(ois, this, name,
+				clientComunication);
 		waitForRequest.start();
+
+		closeForm();
 	}
 
 	private void addPlayButton() {
@@ -99,12 +103,62 @@ public class ChooseAPartener {
 		});
 	}
 
+	private void closeForm() {
+		frame.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				System.out.println("log-gout");
+				clientComunication.logout(name);
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
+	}
+
 	private void play() {
 		play.setEnabled(false);
-//		clientComunication.contactUserToPlay((String) clientsCombo
-//				.getSelectedItem(),name,(Integer) rows.getSelectedItem(),(Integer) columns.getSelectedItem());
-		
-		InitialDialog dialog = new InitialDialog(clientComunication,(String) clientsCombo.getSelectedItem(),name);
+		// clientComunication.contactUserToPlay((String) clientsCombo
+		// .getSelectedItem(),name,(Integer) rows.getSelectedItem(),(Integer)
+		// columns.getSelectedItem());
+
+		InitialDialog dialog = new InitialDialog(clientComunication,
+				(String) clientsCombo.getSelectedItem(), name);
 		dialog.show();
 	}
 
