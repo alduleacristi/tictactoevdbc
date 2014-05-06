@@ -56,7 +56,7 @@ public class Controller {
 		} else
 			JOptionPane.showMessageDialog(null, "Urmeaza celalalt jucator.");
 		
-		verificareGataSiModificare(i, j);
+		//verificareGataSiModificare(i, j);
 	}
 
 	public void afisareMesajGata() {
